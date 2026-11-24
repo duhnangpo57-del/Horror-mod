@@ -64,7 +64,7 @@ public final class ObserverCommands {
             source.sendFailure(Component.translatable("command.observer.brain.none"));
             return 0;
         }
-        String info = observer.getBrain().describe();
+        String info = observer.getObserverBrain().describe();
         source.sendSuccess(() -> Component.translatable("command.observer.brain.info", info), false);
         return 1;
     }
