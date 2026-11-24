@@ -1,0 +1,29 @@
+{
+  "entity.observer.the_observer": "ผู้สังเกตการณ์",
+  "item.observer.the_observer_spawn_egg": "ไข่เสกผู้สังเกตการณ์",
+
+  "command.observer.status.none": "ยังไม่มีผู้สังเกตการณ์ลงทะเบียนในโลกนี้",
+  "command.observer.status.active": "ผู้สังเกตการณ์ %s ถูกพบล่าสุดที่ %s, %s, %s ในมิติ %s",
+  "command.observer.released": "ปล่อยการลงทะเบียนแล้ว สามารถเสกผู้สังเกตการณ์ตัวใหม่ได้",
+  "command.observer.brain.none": "ยังไม่มีผู้สังเกตการณ์ที่โหลดอยู่",
+  "command.observer.brain.info": "สมอง: %s",
+  "command.observer.memory.none": "ผู้สังเกตการณ์ยังไม่มีความทรงจำเกี่ยวกับ %s",
+  "command.observer.memory.header": "สิ่งที่ผู้สังเกตการณ์จำได้เกี่ยวกับ %s (เฝ้าดูมา %s นาที)",
+  "command.observer.memory.line": "%s: %s",
+
+  "label.observer.style": "สไตล์การเล่น",
+  "label.observer.home": "พื้นที่ที่อยู่บ่อย (x, z)",
+  "label.observer.mined": "ขุดบ่อยที่สุด",
+  "label.observer.built": "วางบ่อยที่สุด",
+  "label.observer.weapon": "อาวุธที่ชอบ",
+  "label.observer.armor": "ชุดเกราะที่ใส่บ่อย",
+  "label.observer.peak": "ชั่วโมงที่ active ที่สุด",
+  "label.observer.aggression": "ความก้าวร้าว",
+  "label.observer.totals": "ขุด / วาง / โจมตี",
+
+  "playstyle.observer.unknown": "ยังไม่ทราบ",
+  "playstyle.observer.miner": "นักขุด",
+  "playstyle.observer.builder": "นักสร้าง",
+  "playstyle.observer.explorer": "นักสำรวจ",
+  "playstyle.observer.fighter": "นักสู้"
+}

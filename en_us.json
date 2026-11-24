@@ -1,0 +1,29 @@
+{
+  "entity.observer.the_observer": "The Observer",
+  "item.observer.the_observer_spawn_egg": "The Observer Spawn Egg",
+
+  "command.observer.status.none": "No Observer is registered in this world.",
+  "command.observer.status.active": "Observer %s was last seen at %s, %s, %s in %s.",
+  "command.observer.released": "Observer registration released. A new Observer may now be spawned.",
+  "command.observer.brain.none": "No Observer is currently loaded.",
+  "command.observer.brain.info": "Brain: %s",
+  "command.observer.memory.none": "The Observer has no memory of %s yet.",
+  "command.observer.memory.header": "What the Observer remembers about %s (%s min watched)",
+  "command.observer.memory.line": "%s: %s",
+
+  "label.observer.style": "Play style",
+  "label.observer.home": "Frequent area (x, z)",
+  "label.observer.mined": "Most mined",
+  "label.observer.built": "Most placed",
+  "label.observer.weapon": "Favorite weapon",
+  "label.observer.armor": "Usual armor",
+  "label.observer.peak": "Most active hour",
+  "label.observer.aggression": "Aggression",
+  "label.observer.totals": "Mined / Placed / Hits",
+
+  "playstyle.observer.unknown": "Unknown",
+  "playstyle.observer.miner": "Miner",
+  "playstyle.observer.builder": "Builder",
+  "playstyle.observer.explorer": "Explorer",
+  "playstyle.observer.fighter": "Fighter"
+}
