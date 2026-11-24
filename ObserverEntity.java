@@ -39,7 +39,7 @@ public class ObserverEntity extends PathfinderMob {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.3D);
     }
 
-    public ObserverBrain getBrain() {
+    public ObserverBrain getObserverBrain() {
         return brain;
     }
 
