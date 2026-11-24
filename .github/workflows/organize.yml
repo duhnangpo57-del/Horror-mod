@@ -1,0 +1,61 @@
+name: Organize files
+
+on: workflow_dispatch
+
+permissions:
+  contents: write
+
+jobs:
+  organize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Move files into src/ structure
+        run: |
+          J=src/main/java/com/observer
+          R=src/main/resources
+
+          mv_file() {
+            if [ -f "$1" ]; then
+              mkdir -p "$(dirname "$2")"
+              git mv "$1" "$2"
+            fi
+          }
+
+          mv_file ObserverMod.java $J/ObserverMod.java
+
+          for f in Actions BehaviorTree Facts GoalStats GoapAction GoapPlanner NodeStatus ObserverBrain ObserverContext ObserverGoal; do
+            mv_file $f.java $J/ai/$f.java
+          done
+          for f in ClientModEvents ObserverEyesLayer ObserverRenderer; do
+            mv_file $f.java $J/client/$f.java
+          done
+          mv_file ObserverConfig.java $J/config/ObserverConfig.java
+          mv_file ObserverEntity.java $J/entity/ObserverEntity.java
+          for f in ForgeBusEvents ModBusEvents ObserverCommands PlayerObservationEvents; do
+            mv_file $f.java $J/events/$f.java
+          done
+          mv_file HorrorDirector.java $J/horror/HorrorDirector.java
+          for f in HabitAnalyzer HabitSummary MemoryContext MemoryEvent MemoryEventType ObserverMemoryData ObserverWorldData PlayerProfile; do
+            mv_file $f.java $J/memory/$f.java
+          done
+          for f in ModEntities ModItems; do
+            mv_file $f.java $J/registry/$f.java
+          done
+
+          mv_file mods.toml $R/META-INF/mods.toml
+          mv_file pack.mcmeta $R/pack.mcmeta
+          mv_file en_us.json $R/assets/observer/lang/en_us.json
+          mv_file th_th.json $R/assets/observer/lang/th_th.json
+          mv_file the_observer_spawn_egg.json $R/assets/observer/models/item/the_observer_spawn_egg.json
+          mv_file the_observer.png $R/assets/observer/textures/entity/the_observer.png
+          mv_file the_observer_eyes.png $R/assets/observer/textures/entity/the_observer_eyes.png
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Organize files into src structure" || echo "nothing to commit"
+          git push
