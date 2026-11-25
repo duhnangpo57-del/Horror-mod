@@ -11,37 +11,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Put flat files into src/ (skipped if src/ exists)
+      - name: Unpack the project zip
         run: |
-          python3 - <<'PY'
-          import glob, os, re, shutil
-          if os.path.isdir('src/main/java'):
-              print('src/ already exists, nothing to do')
-              raise SystemExit
-          res = {
-              'en_us.json': 'src/main/resources/assets/observer/lang',
-              'th_th.json': 'src/main/resources/assets/observer/lang',
-              'the_observer.png': 'src/main/resources/assets/observer/textures/entity',
-              'the_observer_eyes.png': 'src/main/resources/assets/observer/textures/entity',
-              'the_observer_spawn_egg.json': 'src/main/resources/assets/observer/models/item',
-              'mods.toml': 'src/main/resources/META-INF',
-              'pack.mcmeta': 'src/main/resources',
-          }
-          for f in glob.glob('*.java'):
-              m = re.search(r'^package\s+([\w.]+);', open(f, encoding='utf-8').read(), re.M)
-              d = 'src/main/java/' + m.group(1).replace('.', '/')
-              os.makedirs(d, exist_ok=True)
-              shutil.move(f, d)
-          for f, d in res.items():
-              if os.path.exists(f):
-                  os.makedirs(d, exist_ok=True)
-                  shutil.move(f, d)
-          PY
-
-      - name: Check sources
-        run: |
-          echo "Java files: $(find src -name '*.java' | wc -l)"
-          test "$(find src -name '*.java' | wc -l)" -ge 25
+          set -e
+          ZIP=$(ls -1 observer-mod*.zip 2>/dev/null | sort | tail -n 1 || true)
+          if [ -z "$ZIP" ]; then
+            echo "No observer-mod*.zip found in the repository root. Upload the project zip."
+            exit 1
+          fi
+          echo "Using $ZIP"
+          rm -rf proj tmp_unzip
+          mkdir tmp_unzip
+          unzip -q "$ZIP" -d tmp_unzip
+          if [ -f tmp_unzip/build.gradle ]; then
+            mv tmp_unzip proj
+          else
+            TOP=$(find tmp_unzip -maxdepth 1 -mindepth 1 -type d | head -n 1)
+            mv "$TOP" proj
+          fi
+          echo "Java files: $(find proj/src -name '*.java' | wc -l)"
+          test "$(find proj/src -name '*.java' | wc -l)" -ge 60
 
       - uses: actions/setup-java@v4
         with:
@@ -53,15 +42,18 @@ jobs:
           gradle-version: '8.8'
 
       - name: Build
+        working-directory: proj
         run: gradle build --no-daemon
 
       - name: Verify jar is not empty
+        working-directory: proj
         run: |
           ls -l build/libs
           unzip -l build/libs/observer-*.jar | grep "com/observer/ObserverMod.class"
+          unzip -l build/libs/observer-*.jar | grep "com/observer/boss/ObserverBossEntity.class"
 
       - uses: actions/upload-artifact@v4
         with:
           name: observer-jar
-          path: build/libs/observer-*.jar
-          
+          path: proj/build/libs/observer-*.jar
+
